@@ -1,0 +1,7 @@
+WE:
+  SwiftMailerSpool:
+    spool:
+      type: 'Swift_FileSpool'
+      options: []
+      arguments:
+        path: %FLOW_PATH_DATA%/SwiftMailerSpool/

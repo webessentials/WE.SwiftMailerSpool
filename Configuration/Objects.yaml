@@ -1,0 +1,15 @@
+WE\SwiftMailerSpool\SpoolTransportInterface:
+  scope: prototype
+  factoryObjectName: WE\SwiftMailerSpool\SpoolTransportFactory
+  arguments:
+    1:
+      setting: WE.SwiftMailerSpool.spool.type
+    2:
+      setting: WE.SwiftMailerSpool.spool.options
+    3:
+      setting: WE.SwiftMailerSpool.spool.arguments
+
+TYPO3\SwiftMailer\MailerInterface:
+  arguments:
+    1:
+      object: WE\SwiftMailerSpool\SpoolTransportInterface
