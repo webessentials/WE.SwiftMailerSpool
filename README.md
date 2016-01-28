@@ -15,8 +15,8 @@ The package is pre-configured to use a the file spool:
 ## Usage
 
 Different from the [Neos Swift Mailer](https://github.com/neos/swiftmailer), a `\Swift_Message` has to be created instead 
-of using the `\TYPO3\SwiftMailer\Message` object. This is due to a problems on the serialization of the message that 
-happens in the `\FileSpool` as the serialized `\TYPO3\SwiftMailer\Message` does not include its parent properties of the 
+of using the `\TYPO3\SwiftMailer\Message` object. This is due to a problem on the serialization of the message that 
+happens in the `\FileSpool` as the serialized `\TYPO3\SwiftMailer\Message` does not include its private parent properties of the 
 `\Swift_Message`. 
 
 The process is the same as with the normal SwiftMailer library.

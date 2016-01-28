@@ -41,6 +41,12 @@ class SwiftMailerSpoolCommandController extends CommandController {
 	protected $configurationManager;
 
 	/**
+	 * @Flow\Inject
+	 * @var \WE\SwiftMailerSpool\Log\SwiftMailerSpoolLoggerInterface
+	 */
+	protected $logger;
+
+	/**
 	 * Flush the email spool queue
 	 * 
 	 * @throws \TYPO3\SwiftMailer\Exception
@@ -50,8 +56,13 @@ class SwiftMailerSpoolCommandController extends CommandController {
 		$realTransport = $this->transportFactory->create($settings['transport']['type'], $settings['transport']['options'], $settings['transport']['arguments']);
 		/** @var \Swift_Spool $spool */
 		$spool = $this->spoolMailer->getTransport()->getSpool();
-		$sent = $spool->flushQueue($realTransport);
-		$this->outputLine($sent . ' mails sent');
+		$failedRecipients = array();
+		$sent = $spool->flushQueue($realTransport, $failedRecipients);
+		$this->logger->log($sent . ' mails sent.');
+		$count = count($failedRecipients);
+		if ($count > 0) {
+			$this->logger->log($count . ' recipients failed. Check the spool to see the messages.', LOG_WARNING);
+		}
 	}
 
 }
