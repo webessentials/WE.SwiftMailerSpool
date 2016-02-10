@@ -5,3 +5,5 @@ WE:
       options: []
       arguments:
         path: %FLOW_PATH_DATA%/SwiftMailerSpool/
+      timeLimit: ~
+      messageLimit: ~

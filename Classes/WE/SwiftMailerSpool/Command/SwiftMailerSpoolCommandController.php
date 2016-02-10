@@ -52,10 +52,17 @@ class SwiftMailerSpoolCommandController extends CommandController {
 	 * @throws \TYPO3\SwiftMailer\Exception
 	 */
 	public function flushCommand() {
-		$settings = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.SwiftMailer');
-		$realTransport = $this->transportFactory->create($settings['transport']['type'], $settings['transport']['options'], $settings['transport']['arguments']);
-		/** @var \Swift_Spool $spool */
+		$swiftMailerSettings = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.SwiftMailer');
+		$realTransport = $this->transportFactory->create($swiftMailerSettings['transport']['type'], $swiftMailerSettings['transport']['options'], $swiftMailerSettings['transport']['arguments']);
+		$swiftMailerSpoolSettings = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'WE.SwiftMailerSpool');
+		/** @var \Swift_ConfigurableSpool $spool */
 		$spool = $this->spoolMailer->getTransport()->getSpool();
+		if (is_int($swiftMailerSpoolSettings['spool']['timeLimit'])) {
+			$spool->setTimeLimit($swiftMailerSpoolSettings['spool']['timeLimit']);
+		}
+		if (is_int($swiftMailerSpoolSettings['spool']['messageLimit'])) {
+			$spool->setMessageLimit($swiftMailerSpoolSettings['spool']['messageLimit']);
+		}
 		$failedRecipients = array();
 		$sent = $spool->flushQueue($realTransport, $failedRecipients);
 		$this->logger->log($sent . ' mails sent.');
