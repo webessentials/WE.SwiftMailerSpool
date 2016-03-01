@@ -47,7 +47,7 @@ class SwiftMailerSpoolCommandController extends CommandController {
 	protected $logger;
 
 	/**
-	 * Flush the email spool queue
+	 * Flush the message spool queue
 	 * 
 	 * @throws \TYPO3\SwiftMailer\Exception
 	 */
@@ -73,6 +73,20 @@ class SwiftMailerSpoolCommandController extends CommandController {
 		$count = count($failedRecipients);
 		if ($count > 0) {
 			$this->logger->log($count . ' recipients failed. Check the spool if messages got stuck.', LOG_WARNING, 'SwiftMailerSpool');
+		}
+	}
+
+	/**
+	 * Recover messages that got stuck in the spool.
+	 *
+	 * @throws \TYPO3\SwiftMailer\Exception
+	 */
+	public function recoverCommand() {
+		/** @var \Swift_ConfigurableSpool $spool */
+		$spool = $this->spoolMailer->getTransport()->getSpool();
+		if ($spool instanceof \Swift_FileSpool) {
+			$spool->recover();
+			$this->logger->log('Mails recovered.', LOG_DEBUG, 'SwiftMailerSpool');
 		}
 	}
 }
