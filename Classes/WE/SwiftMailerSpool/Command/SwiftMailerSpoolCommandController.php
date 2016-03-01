@@ -86,7 +86,7 @@ class SwiftMailerSpoolCommandController extends CommandController {
 		$spool = $this->spoolMailer->getTransport()->getSpool();
 		if ($spool instanceof \Swift_FileSpool) {
 			$spool->recover();
-			$this->logger->log('Mails recovered.', LOG_DEBUG, 'SwiftMailerSpool');
+			$this->logger->log('Mails recovered. Run flush to re-send.', LOG_DEBUG, 'SwiftMailerSpool');
 		}
 	}
 }
