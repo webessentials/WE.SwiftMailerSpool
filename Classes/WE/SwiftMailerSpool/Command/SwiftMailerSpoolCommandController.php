@@ -65,11 +65,14 @@ class SwiftMailerSpoolCommandController extends CommandController {
 		}
 		$failedRecipients = array();
 		$sent = $spool->flushQueue($realTransport, $failedRecipients);
-		$this->logger->log($sent . ' mails sent.');
+		if ($sent > 0) {
+			$this->logger->log($sent . ' messages sent.', LOG_INFO, NULL, 'SwiftMailerSpool');
+		} else {
+			$this->logger->log('No messages sent.', LOG_DEBUG, 'SwiftMailerSpool');
+		}
 		$count = count($failedRecipients);
 		if ($count > 0) {
-			$this->logger->log($count . ' recipients failed. Check the spool to see the messages.', LOG_WARNING);
+			$this->logger->log($count . ' recipients failed. Check the spool if messages got stuck.', LOG_WARNING, 'SwiftMailerSpool');
 		}
 	}
-
 }
