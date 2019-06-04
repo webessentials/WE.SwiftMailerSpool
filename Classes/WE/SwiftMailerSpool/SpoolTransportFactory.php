@@ -11,8 +11,8 @@ namespace WE\SwiftMailerSpool;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Reflection\ObjectAccess;
+use Neos\Flow\Annotations as Flow;
+use Neos\Utility\ObjectAccess;
 
 /**
  * Spool transport factory for the SwiftMailerSpool package
@@ -23,7 +23,7 @@ class SpoolTransportFactory {
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\SwiftMailer\TransportFactory
+	 * @var \Neos\SwiftMailer\TransportFactory
 	 */
 	protected $transportFactory;
 

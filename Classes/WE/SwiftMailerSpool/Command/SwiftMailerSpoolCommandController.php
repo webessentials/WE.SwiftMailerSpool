@@ -11,8 +11,8 @@ namespace WE\SwiftMailerSpool\Command;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Cli\CommandController;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Cli\CommandController;
 
 /**
  * Spool Command Controller for the SwiftMailerSpool package
@@ -23,19 +23,19 @@ class SwiftMailerSpoolCommandController extends CommandController {
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\SwiftMailer\MailerInterface
+	 * @var \Neos\SwiftMailer\MailerInterface
 	 */
 	protected $spoolMailer;
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\SwiftMailer\TransportFactory
+	 * @var \Neos\SwiftMailer\TransportFactory
 	 */
 	protected $transportFactory;
 
 	/**
 	 * @Flow\Inject
-	 * @var \TYPO3\Flow\Configuration\ConfigurationManager
+	 * @var \Neos\Flow\Configuration\ConfigurationManager
 	 * @internal
 	 */
 	protected $configurationManager;
@@ -49,12 +49,12 @@ class SwiftMailerSpoolCommandController extends CommandController {
 	/**
 	 * Flush the message spool queue
 	 * 
-	 * @throws \TYPO3\SwiftMailer\Exception
+	 * @throws \Neos\SwiftMailer\Exception
 	 */
 	public function flushCommand() {
-		$swiftMailerSettings = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'TYPO3.SwiftMailer');
+		$swiftMailerSettings = $this->configurationManager->getConfiguration(\Neos\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'Neos.SwiftMailer');
 		$realTransport = $this->transportFactory->create($swiftMailerSettings['transport']['type'], $swiftMailerSettings['transport']['options'], $swiftMailerSettings['transport']['arguments']);
-		$swiftMailerSpoolSettings = $this->configurationManager->getConfiguration(\TYPO3\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'WE.SwiftMailerSpool');
+		$swiftMailerSpoolSettings = $this->configurationManager->getConfiguration(\Neos\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS, 'WE.SwiftMailerSpool');
 		/** @var \Swift_ConfigurableSpool $spool */
 		$spool = $this->spoolMailer->getTransport()->getSpool();
 		if (is_int($swiftMailerSpoolSettings['spool']['timeLimit'])) {
@@ -79,7 +79,7 @@ class SwiftMailerSpoolCommandController extends CommandController {
 	/**
 	 * Recover messages that got stuck in the spool.
 	 *
-	 * @throws \TYPO3\SwiftMailer\Exception
+	 * @throws \Neos\SwiftMailer\Exception
 	 */
 	public function recoverCommand() {
 		/** @var \Swift_ConfigurableSpool $spool */

@@ -11,7 +11,7 @@ namespace WE\SwiftMailerSpool;
  * The TYPO3 project - inspiring people to share!                         *
  *                                                                        */
 
-use TYPO3\SwiftMailer\TransportInterface;
+use Neos\SwiftMailer\TransportInterface;
 
 /**
  * SpoolTransport interface for the SwiftMailerSpool package

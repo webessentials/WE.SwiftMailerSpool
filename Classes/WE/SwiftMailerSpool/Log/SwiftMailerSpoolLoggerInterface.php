@@ -16,5 +16,5 @@ namespace WE\SwiftMailerSpool\Log;
  *
  * @author Simon Gadient <simon@web-essentials.asia>
  */
-interface SwiftMailerSpoolLoggerInterface extends \TYPO3\Flow\Log\LoggerInterface {
+interface SwiftMailerSpoolLoggerInterface extends \Neos\Flow\Log\LoggerInterface {
 }
