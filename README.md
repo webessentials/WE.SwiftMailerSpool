@@ -10,7 +10,7 @@ The package is pre-configured to use a the file spool:
 		  type: 'Swift_FileSpool'
 		  options: []
 		  arguments:
-			path: %FLOW_PATH_DATA%/SwiftMailerSpool/
+			path: '%FLOW_PATH_DATA%/SwiftMailerSpool/'
 			
 ## Usage
 
